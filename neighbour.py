@@ -19,5 +19,5 @@ class NeighbourInquiry(MethodView):
         return render_template('inquiry/community.html')
 
 
-neighbour.add_url_rule('/neighbour/calc', view_func=NeighbourCalc.as_view('neighbour_calc'))
-neighbour.add_url_rule('/neighbour/inquiry', view_func=NeighbourInquiry.as_view('neighbour_inquiry'))
+neighbour.add_url_rule('/neighbour/calc', view_func=NeighbourCalc.as_view('calc'))
+neighbour.add_url_rule('/neighbour/inquiry', view_func=NeighbourInquiry.as_view('inquiry'))

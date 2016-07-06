@@ -1,44 +1,44 @@
 {% extends "base.html" %}
 
 {% block body %}
-  <div class="container">
-    <div class="section">
 
-      <!--   Icon Section   -->
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">每日更新</h5>
-
-            <p class="light">每日及时带给你最新的北邮自习室信息。全面覆盖教一教二教三教四，你最佳的自习助手。</p>
-          </div>
+    <div class="ui container" id="content">
+        <br><br><br><br>
+        <div class="ui positive message" id="shutdown_msg">
+            主机已开启。点击
+            <a href="#" id="shutdown">这里</a>
+            关闭。
         </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">用户体验</h5>
-
-            <p class="light">不再需要关注微信、不再需要安装APP、不再需要花费大量流量，收藏我们的网站，一键轻松查询。</p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">移动优先</h5>
-
-            <p class="light">同时支持移动端、PC端浏览，简洁、优美的无障碍体验。</p>
-          </div>
-        </div>
-      </div>
-
+        <div class="ui blue message" id="time"></div>
+        <table id="example" class="ui celled table" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>主机编号</th>
+                <th>当前温度</th>
+                <th>目标温度</th>
+                <th>状态</th>
+                <th>风速</th>
+                <th>已用量</th>
+                <th>费用</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011/07/25</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <br><br>
-
-    <div class="section">
-
-    </div>
-  </div>
 {% endblock %}

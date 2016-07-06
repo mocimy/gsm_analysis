@@ -19,5 +19,5 @@ class TrafficAnalysis(MethodView):
         return render_template('inquiry/community.html')
 
 
-analysis.add_url_rule('/analysis/inquiry', view_func=TrafficInquiry.as_view('traffic_inquiry'))
-analysis.add_url_rule('/analysis/analysis', view_func=TrafficAnalysis.as_view('traffic_analysis'))
+analysis.add_url_rule('/analysis/inquiry', view_func=TrafficInquiry.as_view('inquiry'))
+analysis.add_url_rule('/analysis/analysis', view_func=TrafficAnalysis.as_view('analysis'))

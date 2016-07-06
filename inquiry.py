@@ -26,6 +26,6 @@ class TrafficInfo(MethodView):
         return render_template('inquiry/traffic.html')
 
 
-inquiry.add_url_rule('/inquiry/station_info', view_func=StationInfo.as_view('station_info'))
-inquiry.add_url_rule('/inquiry/community_info', view_func=CommunityInfo.as_view('community_info'))
-inquiry.add_url_rule('/inquiry/traffic_info', view_func=TrafficInfo.as_view('traffic_info'))
+inquiry.add_url_rule('/inquiry/station_info', view_func=StationInfo.as_view('station'))
+inquiry.add_url_rule('/inquiry/community_info', view_func=CommunityInfo.as_view('community'))
+inquiry.add_url_rule('/inquiry/traffic_info', view_func=TrafficInfo.as_view('traffic'))
