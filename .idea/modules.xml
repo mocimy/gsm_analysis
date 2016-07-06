@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../gsm_analysis/.idea/gsmAnalysis.iml" filepath="$PROJECT_DIR$/../gsm_analysis/.idea/gsmAnalysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gsmAnalysis.iml" filepath="$PROJECT_DIR$/.idea/gsmAnalysis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gsm_analysis.iml" filepath="$PROJECT_DIR$/.idea/gsm_analysis.iml" />
     </modules>
   </component>
 </project>
