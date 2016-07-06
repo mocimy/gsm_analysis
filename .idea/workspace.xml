@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="084bdc2a-a7db-415b-8436-a012c3b2bf97" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../gsm_analysis/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../gsm_analysis/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../gsm_analysis/requirements.txt" />
     </list>
     <ignored path="gsmAnalysis.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -499,7 +499,14 @@
       <option name="project" value="LOCAL" />
       <updated>1467787001917</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="requirements">
+      <created>1467787760307</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1467787760307</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -531,7 +538,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="requirements" />
+    <option name="LAST_COMMIT_MESSAGE" value="requirements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
