@@ -6,7 +6,7 @@ analysis = Blueprint('analysis', __name__, template_folder='templates')
 
 
 class TrafficInquiry(MethodView):
-    # 话务数据分布显示/查询
+    # 话务数据分布显示/查询  faafhalks
 
     def get(self):
         return render_template('inquiry/station.html')
