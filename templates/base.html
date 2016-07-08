@@ -7,6 +7,7 @@
     <link href="{{ url_for('static', filename='semantic.min.css') }}" rel="stylesheet">
 {#    <link href="{{ url_for('static', filename='dataTables.semanticui.min.css') }}" rel="stylesheet">#}
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    {% block header %} {% endblock %}
 </head>
 <body>
 
@@ -18,8 +19,8 @@
         <div class="header">信息查询</div>
         <div class="menu">
             <a class="item" href="{{ url_for('inquiry.station') }}"> 基站信息查询</a>
-            <a class="item" href=""> 小区信息查询</a>
-            <a class="item" href=""> 话务统计信息查询</a>
+            <a class="item" href="{{ url_for('inquiry.community') }}"> 小区信息查询</a>
+            <a class="item" href="{{ url_for('inquiry.traffic') }}"> 话务统计信息查询</a>
         </div>
     </div>
     <div class="item">

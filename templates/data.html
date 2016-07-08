@@ -4,41 +4,60 @@
 
     <div class="ui container" id="content">
         <br><br><br><br>
-        <div class="ui positive message" id="shutdown_msg">
-            主机已开启。点击
-            <a href="#" id="shutdown">这里</a>
-            关闭。
-        </div>
-        <div class="ui blue message" id="time"></div>
-        <table id="example" class="ui celled table" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-                <th>主机编号</th>
-                <th>当前温度</th>
-                <th>目标温度</th>
-                <th>状态</th>
-                <th>风速</th>
-                <th>已用量</th>
-                <th>费用</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-            </tr>
-            </tbody>
-        </table>
+            <form class="ui form" method="post" enctype="multipart/form-data" action="{{ url_for('data.import') }}">
+                <div class="field">
+                    <label>选择要导入的excel文件</label>
+                    <div class="ui action input">
+                        <input type="text" id="_attachmentName">
+                        <label for="attachmentName" class="ui icon button btn-file">
+                            <i class="upload icon"></i>
+                            <input type="file" id="attachmentName" name="attachmentName" style="display: none">
+                        </label>
+                    </div>
+                </div>
+                <button class="ui button" type="submit">导入</button>
+            </form>
     </div>
+{% endblock %}
+
+{% block footer %}
+    <script>
+        var fileExtentionRange = '.xls .xlsx';
+        var MAX_SIZE = 30; // MB
+
+        $(document).on('change', '.btn-file :file', function() {
+            var input = $(this);
+
+            if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+                var label = input.val();
+
+                input.trigger('fileselect', [ 1, label, 0 ]);
+            } else {
+                var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+                var size = input.get(0).files[0].size;
+
+                input.trigger('fileselect', [ numFiles, label, size ]);
+            }
+        });
+
+        $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
+            $('#attachmentName').attr('name', 'attachmentName'); // allow upload.
+
+            var postfix = label.substr(label.lastIndexOf('.'));
+            if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+                if (size > 1024 * 1024 * MAX_SIZE ) {
+                    alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+
+                    $('#attachmentName').removeAttr('name'); // cancel upload file.
+                } else {
+                    $('#_attachmentName').val(label);
+                }
+            } else {
+                alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
+
+                $('#attachmentName').removeAttr('name'); // cancel upload file.
+            }
+        });
+    </script>
 {% endblock %}
