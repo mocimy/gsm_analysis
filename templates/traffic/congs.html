@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <link href="{{ url_for('static', filename='DateTimePicker.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="ui container" id="content">
+    <br><br>
+    <h4 class="ui dividing header">话务查询</h4>
+    <form class="ui form">
+        <div class="field">
+            <label>拥塞门限率</label>
+            <input type="text" id="rate">
+        </div>
+        <div class="field">
+            <label>查询日期</label>
+            <input type="text" data-field="date" id="date" readonly>
+        </div>
+        <div class="field">
+            <label>查询起始时间</label>
+            <input type="text" data-field="time" id="begin_time" readonly>
+        </div>
+        <div class="field">
+            <label>查询截止时间</label>
+            <input type="text" data-field="time" id="end_time" readonly>
+        </div>
+        <div id="dtBox"></div>
+        <div class="ui teal submit button" id="submit">查询</div>
+    </form>
+    <br>
+    <div class="ui message" hidden id="result">
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='DateTimePicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='DatetimePicker-i18n-zh-CN.js') }}"></script>
+    <script src="//cdn.bootcss.com/echarts/3.2.1/echarts.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $("#dtBox").DateTimePicker({
+                language: "zh-CN"
+            });
+
+            $("#submit").click(function () {
+                $.post("#",
+                        {
+                            rate: $("#rate").val(),
+                            date: $("#date").val(),
+                            begin_time: $("#begin_time").val(),
+                            end_time: $("#end_time").val()
+                        },
+                        function (data, status) {
+                            $("#result").html(data.res);
+                            $("#result").show();
+                        });
+
+            });
+
+        });
+    </script>
+{% endblock %}

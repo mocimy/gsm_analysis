@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="ui container" id="content">
+        <br><br>
+        <h4 class="ui dividing header">邻区计算</h4>
+
+        <form class="ui form">
+            <div class="field">
+                <label>距离</label>
+                <div class="ui right labeled input">
+                    <input type="text" name="distance" value="2">
+                    <div class="ui basic label">km </div>
+                </div>
+            </div>
+            <button class="ui teal button" id="submit">计算</button>
+        </form>
+
+
+        <br>
+        <div class="ui message" hidden id="result">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script>
+        $(document).ready(function() {
+            $("#submit").click(function () {
+                    $.get("#",
+                            {
+                                distance: $("distance").val()
+                            },
+                            function (data, status) {
+                                if(data.success){
+                                    $("#result").text('计算完成！');
+                                }
+                            });
+            });
+
+        });
+    </script>
+{% endblock %}

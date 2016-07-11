@@ -36,6 +36,14 @@
                 <input type="text" data-field="time" id="end_time" readonly>
             </div>
             <div id="dtBox"></div>
+            <div class="ui segment">
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" name="gift" tabindex="0" class="hidden">
+                        <label>作为15分钟级进行查询</label>
+                    </div>
+                </div>
+            </div>
             <div class="ui teal submit button" id="submit">查询</div>
         </form>
         <br>
@@ -111,6 +119,7 @@
                         {
                             cell_id: $(".dropdown").dropdown('get text')[0],
                             date: $("#date").val(),
+                            is_fifteen: $('.ui.checkbox').checkbox('is checked'),
                             begin_time: $("#begin_time").val(),
                             end_time: $("#end_time").val()
                         },

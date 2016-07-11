@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="ui container" id="content">
+        <br><br>
+        <h4 class="ui dividing header">邻区查询</h4>
+        <div class="ui fluid search selection dropdown">
+            <input type="hidden" name="country" value="kp">
+            <i class="dropdown icon"></i>
+            <input class="search">
+            <div class="default text">Search...</div>
+            <div class="menu">
+                {% for item in names %}
+                    <div class="item">{{ item }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <button class="ui button" id="submit">查询</button>
+
+        <br>
+        <div class="ui positive message" hidden id="result">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script>
+        $(document).ready(function() {
+            $("#submit").click(function () {
+                $.get("#",
+                        {
+                            cell_id: $(".dropdown").dropdown('get text')[0]
+                        },
+                        function (data, status) {
+                            if(data['res']){
+                                $("#result").html(data['res']);
+                                $("#result").show();
+                            }
+                        });
+            });
+
+        });
+    </script>
+{% endblock %}

@@ -4,60 +4,105 @@
 
     <div class="ui container" id="content">
         <br><br><br><br>
-            <form class="ui form" method="post" enctype="multipart/form-data" action="{{ url_for('data.import') }}">
-                <div class="field">
-                    <label>选择要导入的excel文件</label>
-                    <div class="ui action input">
-                        <input type="text" id="_attachmentName">
-                        <label for="attachmentName" class="ui icon button btn-file">
-                            <i class="upload icon"></i>
-                            <input type="file" id="attachmentName" name="attachmentName" style="display: none">
-                        </label>
+        <div class="ui two column middle aligned very relaxed stackable grid">
+            <div class="column">
+                <form class="ui form" id="myForm" method="post" enctype="multipart/form-data" action="{{ url_for('data.import') }}">
+                    <div class="field">
+                        <label>选择要导入的excel文件</label>
+                        <div class="ui action input">
+                            <input type="text" id="_attachmentName">
+                            <label for="attachmentName" class="ui icon button btn-file">
+                                <i class="upload icon"></i>
+                                <input type="file" id="attachmentName" name="attachmentName" style="display: none">
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <button class="ui button" type="submit">导入</button>
-            </form>
+                    <button class="ui button" id="submit">导入</button>
+                </form>
+                <div class="ui active centered text inline loader" id="loading">正在导入,请稍后...</div>
+                <div class="ui success message" id="success" hidden>导入成功</div>
+            </div>
+            <div class="ui vertical divider">Or </div>
+            <div class="column">
+                <select class="ui dropdown" id="power">
+                    <option value="ms_infor">MS信息</option>
+                    <option value="msc_infor">MSC信息</option>
+                    <option value="bsc_infor">BSC信息</option>
+                    <option value="area_infor">小区基本信息</option>
+                    <option value="area_freq">小区频点表</option>
+                    <option value="aerial_infor">天线信息</option>
+                    <option value="neighbor_infor">邻区信息</option>
+                    <option value="tele_traffic">20个小区一周分钟级话务数据</option>
+                    <option value="road_test">路测信息</option>
+                </select>
+                <br><br>
+                <div class="ui green labeled icon button" id="download"><i class="external icon"></i> 导出 </div>
+            </div>
+        </div>
+    </div>
+
     </div>
 {% endblock %}
 
 {% block footer %}
     <script>
-        var fileExtentionRange = '.xls .xlsx';
-        var MAX_SIZE = 30; // MB
+        $(document).ready(function() {
+            $("#download").click(function () {
+                window.open("/data/export/" + $("#power").val());
+            });
 
-        $(document).on('change', '.btn-file :file', function() {
-            var input = $(this);
+            var fileExtentionRange = '.xls .xlsx';
+            var MAX_SIZE = 30; // MB
 
-            if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
-                var label = input.val();
+            $(document).on('change', '.btn-file :file', function() {
+                var input = $(this);
 
-                input.trigger('fileselect', [ 1, label, 0 ]);
-            } else {
-                var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                var numFiles = input.get(0).files ? input.get(0).files.length : 1;
-                var size = input.get(0).files[0].size;
+                if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+                    var label = input.val();
 
-                input.trigger('fileselect', [ numFiles, label, size ]);
-            }
-        });
+                    input.trigger('fileselect', [ 1, label, 0 ]);
+                } else {
+                    var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+                    var size = input.get(0).files[0].size;
 
-        $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
-            $('#attachmentName').attr('name', 'attachmentName'); // allow upload.
+                    input.trigger('fileselect', [ numFiles, label, size ]);
+                }
+            });
 
-            var postfix = label.substr(label.lastIndexOf('.'));
-            if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
-                if (size > 1024 * 1024 * MAX_SIZE ) {
-                    alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+            $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
+                $('#attachmentName').attr('name', 'attachmentName'); // allow upload.
+
+                var postfix = label.substr(label.lastIndexOf('.'));
+                if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+                    if (size > 1024 * 1024 * MAX_SIZE ) {
+                        alert('max size：<strong>' + MAX_SIZE + '</strong> MB.');
+
+                        $('#attachmentName').removeAttr('name'); // cancel upload file.
+                    } else {
+                        $('#_attachmentName').val(label);
+                    }
+                } else {
+                    alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
 
                     $('#attachmentName').removeAttr('name'); // cancel upload file.
-                } else {
-                    $('#_attachmentName').val(label);
                 }
-            } else {
-                alert('file type：<br/> <strong>' + fileExtentionRange + '</strong>');
+            });
 
-                $('#attachmentName').removeAttr('name'); // cancel upload file.
-            }
+            $("#loading").hide();
+
+            $("#submit").click(function () {
+                var options = {
+                    success: function (responseText) {
+                        $("#loading").hide();
+                        $("#success").show();
+                    }
+                };
+                $("#loading").show();
+                $("#myForm").ajaxForm(options);
+            });
+
         });
+
     </script>
 {% endblock %}

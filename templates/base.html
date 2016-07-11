@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>中央空调</title>
+    <title>GSM话务分析系统</title>
 
     <link href="{{ url_for('static', filename='semantic.min.css') }}" rel="stylesheet">
 {#    <link href="{{ url_for('static', filename='dataTables.semanticui.min.css') }}" rel="stylesheet">#}
@@ -18,23 +18,25 @@
     <div class="item">
         <div class="header">信息查询</div>
         <div class="menu">
-            <a class="item" href="{{ url_for('inquiry.station') }}"> 基站信息查询</a>
-            <a class="item" href="{{ url_for('inquiry.community') }}"> 小区信息查询</a>
+            <a class="item" href="{{ url_for('inquiry.bts') }}"> 基站信息查询</a>
+            <a class="item" href="{{ url_for('inquiry.area') }}"> 小区信息查询</a>
             <a class="item" href="{{ url_for('inquiry.traffic') }}"> 话务统计信息查询</a>
         </div>
     </div>
     <div class="item">
         <div class="header">话务分析</div>
         <div class="menu">
-            <a class="item" href=""> 话务数据分布显示/查询</a>
-            <a class="item" href="">  话务分析</a>
+            <a class="item" href="{{ url_for('traffic.minute') }}"> 分钟级话务量查询</a>
+            <a class="item" href="{{ url_for('inquiry.traffic') }}"> 小时级话务查询</a>
+            <a class="item" href="{{ url_for('traffic.congs') }}">  拥塞小区查询</a>
+            <a class="item" href="{{ url_for('traffic.analysis') }}"> 话务分析</a>
         </div>
     </div>
     <div class="item">
         <div class="header"> 邻区设置及查询</div>
         <div class="menu">
-            <a class="item" href=""> 邻区计算</a>
-            <a class="item" href=""> 邻区查询</a>
+            <a class="item" href="{{ url_for('neighbor.calc') }}"> 邻区计算</a>
+            <a class="item" href="{{ url_for('neighbor.inquiry') }}"> 邻区查询</a>
         </div>
     </div>
 </div>
@@ -51,6 +53,7 @@
 </div>
 
 <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+<script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.min.js"></script>
 {#<script src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>#}
 {#<script src="{{ url_for('static', filename='dataTables.semanticui.min.js') }}"></script>#}
 <script src="{{ url_for('static', filename='semantic.min.js') }}"></script>
