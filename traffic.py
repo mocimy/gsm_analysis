@@ -21,7 +21,7 @@ class MinuteTrafficView(MethodView):
             begin_time = int(request.form['begin_time'].replace(':', ''))
             end_time = int(request.form['end_time'].replace(':', ''))
             cur = psycopg2.connect().cursor()
-            if request.form['is_fifteen']:
+            if request.form['is_fifteen'] == 'true':
                 time = (begin_time % 100 - end_time % 100) % 15
                 if end_time % 100 - time > 0:
                     end_time -= time
@@ -65,8 +65,12 @@ class TrafficAnalysis(MethodView):
     # 话务分析
 
     def get(self):
-        cur = psycopg2.connect().cursor()
+        conn = psycopg2.connect()
+        cur = conn.cursor()
         cur.execute("select trafficAnalyze()")
+        cur.fetchone()
+        conn.commit()
+
         return render_template('traffic/analysis.html')
 
 

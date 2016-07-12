@@ -9,11 +9,19 @@ neighbor = Blueprint('neighbor', __name__, template_folder='templates')
 class CalcView(MethodView):
     # 邻区计算
     def get(self):
-        if 'distance' in request.args:
-            cur = psycopg2.connect().cursor()
-            cur.execute("select distanceCalculate(%s)", (float(request.args['distance']),))
-            return jsonify(success=True)
         return render_template('neighbor/calc.html')
+
+    def post(self):
+        print(request.args['distance_val'])
+        if 'distance_val' in request.args:
+            print('123')
+            conn = psycopg2.connect()
+            cur = conn.cursor()
+            cur.execute("select distanceCalculate(%s)", (float(request.args['distance_val']),))
+            cur.fetchall()
+            conn.commit()
+            return jsonify(success=True)
+        return jsonify(success=False)
 
 
 class InquiryView(MethodView):
@@ -25,8 +33,8 @@ class InquiryView(MethodView):
         data = [x[0] for x in cur.fetchall()]
         if 'cell_id' in request.args:
             cur.execute("select * from displayDistance(%s)", (request.args['cell_id'],))
-            data = cur.fetchone()
-            res = '<br>'.join([x[1]+",距离:"+x[6] for x in data])
+            data = cur.fetchall()
+            res = '<br>'.join([x[1]+",距离:"+str(x[6]) for x in data])
             return jsonify(res=res)
         return render_template('neighbor/inquiry.html', names=data)
 

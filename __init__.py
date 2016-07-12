@@ -5,7 +5,7 @@ from flask_psycopg2 import Psycopg2
 app = Flask(__name__)
 app.config['USERNAME'] = 'admin'
 app.config['PASSWORD'] = '123456'
-app.config['PSYCOPG2_DATABASE_URI'] = 'pgsql://postgres:@localhost/gsm'
+app.config['PSYCOPG2_DATABASE_URI'] = 'pgsql://postgres:123@localhost/postgres'
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 

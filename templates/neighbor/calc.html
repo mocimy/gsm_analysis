@@ -5,20 +5,20 @@
         <br><br>
         <h4 class="ui dividing header">邻区计算</h4>
 
-        <form class="ui form">
-            <div class="field">
+{#        <form class="ui form">#}
+{#            <div class="field">#}
                 <label>距离</label>
                 <div class="ui right labeled input">
-                    <input type="text" name="distance" value="2">
+                    <input type="text" id="distance">
                     <div class="ui basic label">km </div>
                 </div>
-            </div>
+{#            </div>#}
             <button class="ui teal button" id="submit">计算</button>
-        </form>
+{#        </form>#}
 
 
         <br>
-        <div class="ui message" hidden id="result">
+        <div class="ui message" id="result">
 
         </div>
     </div>
@@ -28,17 +28,17 @@
     <script>
         $(document).ready(function() {
             $("#submit").click(function () {
-                    $.get("#",
-                            {
-                                distance: $("distance").val()
-                            },
-                            function (data, status) {
+                 $.post("{{ url_for('neighbor.calc') }}",
+                        {
+                           distance: $("#distance").val()
+                        },
+                        function (data, status) {
+                                $("#result").show();
                                 if(data.success){
                                     $("#result").text('计算完成！');
-                                }
-                            });
+                                };
+                        });
             });
-
         });
     </script>
 {% endblock %}
