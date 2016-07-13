@@ -5,7 +5,7 @@
     <title>GSM话务分析系统</title>
 
     <link href="{{ url_for('static', filename='semantic.min.css') }}" rel="stylesheet">
-{#    <link href="{{ url_for('static', filename='dataTables.semanticui.min.css') }}" rel="stylesheet">#}
+    {#    <link href="{{ url_for('static', filename='dataTables.semanticui.min.css') }}" rel="stylesheet">#}
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     {% block header %} {% endblock %}
 </head>
@@ -47,7 +47,10 @@
         <a class="launch icon item">
             <i class="content icon"></i>
         </a>
-        <div class="item">主机管理 </div>
+        <div class="item">GSM 话务分析系统 </div>
+        <div class="item right">
+            <a class="ui inverted button" href="{{ url_for('login.login_out') }}">注销</a>
+        </div>
     </div>
     {% block body %} {% endblock %}
 </div>

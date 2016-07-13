@@ -5,6 +5,7 @@ from flask import Blueprint, request, redirect, render_template, url_for, send_f
 from flask.views import MethodView
 from werkzeug.utils import secure_filename
 from gsm_analysis import psycopg2
+from gsm_analysis.login import login_required
 
 
 data = Blueprint('data', __name__, template_folder='templates')
@@ -24,12 +25,25 @@ table = {
 
 class DataManage(MethodView):
 
+    @login_required
     def get(self):
         return render_template('data.html')
 
 
 class ImportView(MethodView):
 
+    def block(self, sh_name, line):
+        new = None
+        if sh_name == '20个小区一周分钟级话务数据':
+            new = line.replace('.0\t','\t')
+        elif sh_name == '小区基本信息':
+            cellID = line[:line.find('\t')]
+            if '.' not in cellID and int(cellID) >= 0:
+                new = line
+        return new
+
+
+    @login_required
     def post(self):
         if 'attachmentName' in request.files:
             file = request.files['attachmentName']
@@ -44,7 +58,10 @@ class ImportView(MethodView):
                 n = 0
                 for sh in book.sheets():
                     for i in range(2, sh.nrows):
-                        input_buffer.write('\t'.join([str(x) for x in sh.row_values(i)])+'\n')
+                        line = '\t'.join([str(x) for x in sh.row_values(i)])+'\n'
+                        line = self.block(sh.name, line)
+                        if line:
+                            input_buffer.write(line)
                         if n % 50 == 0:
                             input_buffer.seek(0)
                             cur.copy_from(input_buffer, table[sh.name])
@@ -62,6 +79,7 @@ class ImportView(MethodView):
 
 class ExportView(MethodView):
 
+    @login_required
     def get(self, tname):
         conn = psycopg2.connect()
         cur = conn.cursor()

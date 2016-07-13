@@ -1,6 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for, jsonify
 from flask.views import MethodView
 from gsm_analysis import psycopg2
+from gsm_analysis.login import login_required
 
 
 inquiry = Blueprint('inquiry', __name__, template_folder='templates')
@@ -9,6 +10,7 @@ inquiry = Blueprint('inquiry', __name__, template_folder='templates')
 class StationInfo(MethodView):
     # 基站信息查询
 
+    @login_required
     def get(self):
         cur = psycopg2.connect().cursor()
         cur.execute('''select "BtsName" from bts_infor''')
@@ -25,6 +27,7 @@ class StationInfo(MethodView):
 class CommunityInfo(MethodView):
     # 小区信息查询
 
+    @login_required
     def get(self):
         cur = psycopg2.connect().cursor()
         cur.execute('''select "CellID" from area_infor''')
@@ -43,12 +46,14 @@ class CommunityInfo(MethodView):
 class TrafficInfo(MethodView):
     # 话务统计信息查询
 
+    @login_required
     def get(self):
         cur = psycopg2.connect().cursor()
         cur.execute('''select "CellID" from area_infor''')
         data = [x[0] for x in cur.fetchall()]
         return render_template('inquiry/traffic.html', names=data)
 
+    @login_required
     def post(self):
         if 'cell_id' in request.form and 'date' in request.form and 'begin_time' in request.form and 'end_time' in request.form:
             cell_id = request.form['cell_id']

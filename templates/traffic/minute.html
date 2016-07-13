@@ -74,18 +74,18 @@
                 },
                 tooltip: {},
                 legend: {
-                    data:['小时级话务量','小时级每线话务量']
+                    data:['话务量','每线话务量']
                 },
                 xAxis: {
                     data: []
                 },
                 yAxis: {},
                 series: [{
-                    name: '小时级话务量',
+                    name: '话务量',
                     type: 'line',
                     data: []
                 },{
-                    name: '小时级每线话务量',
+                    name: '每线话务量',
                     type: 'line',
                     data: []
                 }]
@@ -97,18 +97,18 @@
                 },
                 tooltip: {},
                 legend: {
-                    data:['小时级拥塞率','小时级半速率话务量比例']
+                    data:['拥塞率','半速率话务量比例']
                 },
                 xAxis: {
                     data: []
                 },
                 yAxis: {},
                 series: [{
-                    name: '小时级拥塞率',
+                    name: '拥塞率',
                     type: 'line',
                     data: []
                 },{
-                    name: '小时级半速率话务量比例',
+                    name: '半速率话务量比例',
                     type: 'line',
                     data: []
                 }]
@@ -130,10 +130,10 @@
                                 },
                                 series: [{
                                     // 根据名字对应到相应的系列
-                                    name: '小时级话务量',
+                                    name: '话务量',
                                     data: data.traffavg
                                 },{
-                                    name: '小时级每线话务量',
+                                    name: '每线话务量',
                                     data: data.traffline
                                 }]
                             });
@@ -143,10 +143,10 @@
                                 },
                                 series: [{
                                     // 根据名字对应到相应的系列
-                                    name: '小时级话务量',
+                                    name: '话务量',
                                     data: data.callcongs
                                 },{
-                                    name: '小时级每线话务量',
+                                    name: '每线话务量',
                                     data: data.rate
                                 }]
                             });

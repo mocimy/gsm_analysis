@@ -1,6 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for, jsonify
 from flask.views import MethodView
 from gsm_analysis import psycopg2
+from gsm_analysis.login import login_required
 
 
 neighbor = Blueprint('neighbor', __name__, template_folder='templates')
@@ -8,16 +9,16 @@ neighbor = Blueprint('neighbor', __name__, template_folder='templates')
 
 class CalcView(MethodView):
     # 邻区计算
+    @login_required
     def get(self):
         return render_template('neighbor/calc.html')
 
+    @login_required
     def post(self):
-        print(request.args['distance_val'])
-        if 'distance_val' in request.args:
-            print('123')
+        if 'distance' in request.form:
             conn = psycopg2.connect()
             cur = conn.cursor()
-            cur.execute("select distanceCalculate(%s)", (float(request.args['distance_val']),))
+            cur.execute("select distanceCalculate(%s)", (float(request.form['distance']),))
             cur.fetchall()
             conn.commit()
             return jsonify(success=True)
@@ -27,6 +28,7 @@ class CalcView(MethodView):
 class InquiryView(MethodView):
     # 邻区查询
 
+    @login_required
     def get(self):
         cur = psycopg2.connect().cursor()
         cur.execute('''select "CellID" from area_infor''')

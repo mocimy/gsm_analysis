@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import Blueprint, request, redirect, render_template, url_for, session
 from flask.views import MethodView
 from gsm_analysis import app
@@ -22,4 +23,21 @@ class LoginView(MethodView):
         return render_template('login.html', fail=True)
 
 
+class LoginOutView(MethodView):
+
+    def get(self):
+        session.pop('username', None)
+        return redirect(url_for('login.login'))
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in session:
+            return redirect(url_for('login.login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 login.add_url_rule('/', view_func=LoginView.as_view('login'))
+login.add_url_rule('/login_out', view_func=LoginOutView.as_view('login_out'))
